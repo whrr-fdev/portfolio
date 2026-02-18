@@ -8,33 +8,29 @@ document.addEventListener('DOMContentLoaded', () => {
     initScrollProgress();
     initGuestbook();
     initParallax();
-    
-    // Запускаем анимации после полной загрузки страницы
+
     window.addEventListener('load', () => {
-        // Даем время на исчезновение лоадера (800ms)
         setTimeout(() => {
             initScrollAnimations();
         }, 800);
     });
-    
+
     preloadHeroImage();
     handleInitialHash();
 });
 
-// ==================== АНИМАЦИИ ПРИ ПРОКРУТКЕ ====================
 function initScrollAnimations() {
-    console.log('Анимации запущены'); // Для отладки
-    
-    // Герой секция - каждый элемент отдельно с последовательными задержками
+    console.log('Анимации запущены');
+
     const heroTitle = document.querySelector('.hero__title');
     const heroSubtitle = document.querySelector('.hero__subtitle');
     const heroDescriptions = document.querySelectorAll('.hero__description');
     const heroLinks = document.querySelector('.hero__links');
-    
-    // Задержки для герой секции (увеличил для надежности)
-    const heroBaseDelay = 300; // Дополнительная задержка перед началом анимаций героя
-    
-    // Заголовок
+
+
+    const heroBaseDelay = 300; 
+
+
     if (heroTitle) {
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
@@ -49,7 +45,7 @@ function initScrollAnimations() {
         }, { threshold: 0.1 });
         observer.observe(heroTitle);
     }
-    
+
     // Подзаголовок
     if (heroSubtitle) {
         const observer = new IntersectionObserver((entries) => {
@@ -65,7 +61,7 @@ function initScrollAnimations() {
         }, { threshold: 0.1 });
         observer.observe(heroSubtitle);
     }
-    
+
     // Описания
     heroDescriptions.forEach((desc, index) => {
         const observer = new IntersectionObserver((entries) => {
@@ -81,7 +77,7 @@ function initScrollAnimations() {
         }, { threshold: 0.1 });
         observer.observe(desc);
     });
-    
+
     // Кнопки
     if (heroLinks) {
         const observer = new IntersectionObserver((entries) => {
@@ -97,7 +93,7 @@ function initScrollAnimations() {
         }, { threshold: 0.1 });
         observer.observe(heroLinks);
     }
-    
+
     // Заголовки секций
     const sectionTitles = document.querySelectorAll('.section-title');
     sectionTitles.forEach((title, index) => {
@@ -106,15 +102,34 @@ function initScrollAnimations() {
                 if (entry.isIntersecting) {
                     setTimeout(() => {
                         entry.target.classList.add('visible');
+                        console.log(`Заголовок секции ${index + 1} появился`);
                     }, index * 100);
                     titleObserver.unobserve(entry.target);
                 }
             });
         }, { threshold: 0.1 });
-        
+
         titleObserver.observe(title);
     });
-    
+
+    // Подзаголовок гостевой книги
+    const guestSubtitle = document.querySelector('.guest-subtitle');
+    if (guestSubtitle) {
+        const subtitleObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.classList.add('visible');
+                        console.log('Подзаголовок гостевой книги появился');
+                    }, 150);
+                    subtitleObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        subtitleObserver.observe(guestSubtitle);
+    }
+
     // Кнопка открыть гостевую книгу
     const guestToggleBtn = document.querySelector('.guestbook-toggle-btn');
     if (guestToggleBtn) {
@@ -123,15 +138,16 @@ function initScrollAnimations() {
                 if (entry.isIntersecting) {
                     setTimeout(() => {
                         entry.target.classList.add('visible');
+                        console.log('Кнопка гостевой книги появилась');
                     }, 200);
                     toggleObserver.unobserve(entry.target);
                 }
             });
         }, { threshold: 0.1 });
-        
+
         toggleObserver.observe(guestToggleBtn);
     }
-    
+
     // About элементы
     const aboutItems = document.querySelectorAll('.about-item');
     aboutItems.forEach((item, index) => {
@@ -140,32 +156,61 @@ function initScrollAnimations() {
                 if (entry.isIntersecting) {
                     setTimeout(() => {
                         entry.target.classList.add('visible');
+                        console.log(`About элемент ${index + 1} появился`);
                     }, index * 150);
                     itemObserver.unobserve(entry.target);
                 }
             });
         }, { threshold: 0.1 });
-        
+
         itemObserver.observe(item);
     });
-    
-    // Карточки проектов
-    const projectCards = document.querySelectorAll('.project-card');
+
+    // ===== ИСПРАВЛЕНО: Карточки проектов (обычные) =====
+    const projectCards = document.querySelectorAll('.project-card:not(.in-development)');
     projectCards.forEach((card, index) => {
         const cardObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     setTimeout(() => {
                         entry.target.classList.add('visible');
+                        console.log(`Карточка проекта ${index + 1} появилась`);
                     }, index * 100);
                     cardObserver.unobserve(entry.target);
                 }
             });
         }, { threshold: 0.1 });
-        
+
         cardObserver.observe(card);
     });
-    
+
+    // ===== ИСПРАВЛЕНО: Карточки в разработке (плавное появление) =====
+    const devCards = document.querySelectorAll('.project-card.in-development');
+    devCards.forEach((card, index) => {
+        // НЕ устанавливаем стили через JS, они уже есть в CSS с !important
+        // Просто убеждаемся, что класс visible не установлен
+        card.classList.remove('visible');
+
+        const devObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Добавляем класс visible для запуска CSS-перехода
+                    setTimeout(() => {
+                        entry.target.classList.add('visible');
+                        console.log(`Карточка в разработке ${index + 1} появилась`);
+                    }, 300 + (index * 150));
+
+                    devObserver.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.15,
+            rootMargin: '0px'
+        });
+
+        devObserver.observe(card);
+    });
+
     // Карточки контактов
     const contactCards = document.querySelectorAll('.contact-card');
     contactCards.forEach((card, index) => {
@@ -174,12 +219,13 @@ function initScrollAnimations() {
                 if (entry.isIntersecting) {
                     setTimeout(() => {
                         entry.target.classList.add('visible');
+                        console.log(`Карточка контакта ${index + 1} появилась`);
                     }, index * 100);
                     cardObserver.unobserve(entry.target);
                 }
             });
         }, { threshold: 0.1 });
-        
+
         cardObserver.observe(card);
     });
 }
@@ -212,9 +258,9 @@ function initTheme() {
 // ==================== НАВИГАЦИЯ ====================
 function initNavigation() {
     const links = document.querySelectorAll('.header__link');
-    
+
     links.forEach(link => {
-        link.addEventListener('click', function(e) {
+        link.addEventListener('click', function (e) {
             const targetId = this.getAttribute('href');
             if (!targetId || targetId === '#') return;
 
@@ -246,11 +292,11 @@ function smoothScrollTo(targetPosition, duration) {
         if (startTime === null) startTime = currentTime;
         const timeElapsed = currentTime - startTime;
         const progress = Math.min(timeElapsed / duration, 1);
-        
-        const ease = progress < 0.5 
-            ? 4 * progress * progress * progress 
+
+        const ease = progress < 0.5
+            ? 4 * progress * progress * progress
             : 1 - Math.pow(-2 * progress + 2, 3) / 2;
-            
+
         window.scrollTo(0, startPosition + distance * ease);
 
         if (timeElapsed < duration) {
@@ -300,7 +346,7 @@ function initScrollSpy() {
         clearTimeout(scrollTimeout);
         scrollTimeout = setTimeout(updateActiveSection, 50);
     });
-    
+
     updateActiveSection();
 }
 
@@ -331,9 +377,9 @@ function initScrollProgress() {
 function initParallax() {
     const heroBg = document.querySelector('.hero-bg');
     if (!heroBg) return;
-    
+
     let ticking = false;
-    
+
     window.addEventListener('scroll', () => {
         if (!ticking) {
             window.requestAnimationFrame(() => {
@@ -352,16 +398,16 @@ function initGuestbook() {
     const guestbookContent = document.getElementById('guestbookContent');
     const toggleText = document.getElementById('toggleText');
     const toggleIcon = document.getElementById('toggleIcon');
-    
+
     if (mainToggle && guestbookContent) {
         guestbookContent.style.display = 'none';
-        
+
         mainToggle.addEventListener('click', () => {
             if (guestbookContent.style.display === 'none') {
                 guestbookContent.style.display = 'block';
                 if (toggleText) toggleText.textContent = 'Скрыть гостевую книгу';
                 if (toggleIcon) toggleIcon.className = 'fas fa-chevron-up';
-                
+
                 setTimeout(() => {
                     const messageCards = document.querySelectorAll('.message-card');
                     messageCards.forEach((card, index) => {
@@ -382,7 +428,7 @@ function initGuestbook() {
     const supabaseUrl = 'https://juyilekdgvmtrcmlnipj.supabase.co';
     const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp1eWlsZWtkZ3ZtdHJjbWxuaXBqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzEzMjUxNTQsImV4cCI6MjA4NjkwMTE1NH0.yThmXSHpWDYaoOnkkdcOHGsn3kq27r-oBY8hFqIEEAM';
     const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
-    
+
     const guestForm = document.querySelector('.guestbook-form');
     const commentsContainer = document.getElementById('commentsContainer');
 
@@ -413,15 +459,15 @@ function initGuestbook() {
                 <span class="message-author">${escapeHTML(c.name)}</span>
                 <p class="message-text">${escapeHTML(c.message)}</p>
                 <span class="message-date">${new Date(c.created_at).toLocaleDateString('ru-RU', {
-                    day: 'numeric', 
-                    month: 'long', 
-                    year: 'numeric', 
-                    hour: '2-digit', 
-                    minute: '2-digit'
-                })}</span>
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        })}</span>
             </div>
         `).join('');
-        
+
         if (guestbookContent && guestbookContent.style.display === 'block') {
             const messageCards = document.querySelectorAll('.message-card');
             messageCards.forEach((card, index) => {
@@ -434,12 +480,12 @@ function initGuestbook() {
 
     function escapeHTML(str) {
         if (!str) return '';
-        const map = { 
-            '&': '&amp;', 
-            '<': '&lt;', 
-            '>': '&gt;', 
-            '"': '&quot;', 
-            "'": '&#39;' 
+        const map = {
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#39;'
         };
         return str.replace(/[&<>"']/g, m => map[m]);
     }
@@ -487,7 +533,7 @@ function initGuestbook() {
 // ==================== ВСПОМОГАТЕЛЬНЫЕ ====================
 function handleInitialHash() {
     if (!window.location.hash) return;
-    
+
     const hash = window.location.hash;
     const targetLink = document.querySelector(`.header__link[href="${hash}"]`);
     if (!targetLink) return;
