@@ -1,8 +1,3 @@
-/* ========================================
-   ГЛАВНЫЙ ФАЙЛ СТИЛЕЙ
-   ======================================== */
-
-/* Базовые стили */
 * {
     margin: 0;
     padding: 0;
@@ -34,7 +29,7 @@ body::after {
     position: fixed;
     bottom: 20px;
     right: 20px;
-    opacity: 0.1;
+    opacity: 0.03;
     z-index: 9998;
     pointer-events: none;
 }
@@ -44,10 +39,6 @@ body::after {
     margin: 0 auto;
     padding: 0 20px;
 }
-
-/* ========================================
-   CSS ПЕРЕМЕННЫЕ
-   ======================================== */
 
 :root {
     --bg-color: #ffffff;
@@ -92,10 +83,6 @@ body::after {
     --btn-outline-hover: #ffffff;
     --btn-outline-text-hover: #000000;
 }
-
-/* ========================================
-   ТИПОГРАФИКА
-   ======================================== */
 
 .section-title {
     font-size: clamp(1.8rem, 4vw, 2.3rem);
@@ -158,18 +145,12 @@ p {
     line-height: 1.6;
 }
 
-/* ========================================
-   СЕКЦИИ
-   ======================================== */
 
 section {
     padding: 80px 0;
     background-color: var(--section-bg);
 }
 
-/* ========================================
-   HERO СЕКЦИЯ С ПАРАЛЛАКСОМ
-   ======================================== */
 
 .hero {
     position: relative;
@@ -217,9 +198,6 @@ section {
     flex-wrap: wrap;
 }
 
-/* ========================================
-   ABOUT TIMELINE
-   ======================================== */
 
 .about-timeline {
     position: relative;
@@ -285,9 +263,6 @@ section {
     color: var(--gray-dark);
 }
 
-/* ========================================
-   PROJECT CARDS
-   ======================================== */
 
 .projects-grid {
     display: grid;
@@ -352,7 +327,321 @@ section {
 }
 
 /* ========================================
-   CONTACT CARDS
+   PROJECT CARDS
+   ======================================== */
+
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 30px;
+    margin-top: 30px;
+}
+
+.project-card,
+.project-card.in-development {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    overflow: hidden;
+    height: 100%;
+    position: relative;
+    transition: background-color 0.3s ease,
+        border-color 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+.project-card:hover,
+.project-card.in-development:hover {
+    background-color: var(--gray-light);
+    border-color: var(--hover-color);
+    box-shadow: 0 10px 30px var(--shadow-color);
+}
+
+.project-card.in-development {
+    border: 1px dashed var(--border-color);
+}
+
+.project-card.in-development:hover {
+    border-color: var(--accent-color);
+}
+
+.project-card__icon {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 1.5rem;
+    color: var(--icon-color);
+    transition: color 0.3s;
+}
+
+.project-card:hover .project-card__icon,
+.project-card.in-development:hover .project-card__icon {
+    color: var(--accent-color);
+}
+
+.project-card__content {
+    padding: 30px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.project-card h3 {
+    font-size: 1.4rem;
+    padding-right: 40px;
+}
+
+.project-card p {
+    margin-bottom: 20px;
+    flex-grow: 1;
+}
+
+.project-card__actions {
+    display: flex;
+    gap: 10px;
+    margin-top: auto;
+    flex-wrap: wrap;
+}
+
+/* Бейдж "в разработке" */
+.dev-badge {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 600;
+    background: var(--gray-dark);
+    color: var(--bg-color);
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-left: 10px;
+    vertical-align: middle;
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+}
+
+[data-theme="dark"] .dev-badge {
+    background: var(--gray-light);
+    color: var(--text-color);
+}
+
+/* Контейнер для статуса разработки */
+.project-card__status {
+    margin: 15px 0 10px;
+    padding: 0 5px;
+}
+
+/* Текст прогресса */
+.status-progress {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--gray-dark);
+    margin-bottom: 6px;
+    font-weight: 500;
+}
+
+/* Прогресс-бар */
+.progress-bar {
+    height: 6px;
+    background: var(--border-color);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 4px;
+}
+
+.progress-fill {
+    height: 100%;
+    background: var(--accent-color);
+    border-radius: 10px;
+    transition: width 0.3s ease;
+}
+
+/* Стили для карточек с прогрессом при наведении */
+.project-card.in-development:hover .progress-fill {
+    opacity: 0.8;
+}
+
+/* ========================================
+   АНИМАЦИЯ ДЛЯ КНОПОК "СМОТРЕТЬ"
+   ======================================== */
+
+.project-card__actions .btn-small {
+    transition: all 0.3s ease;
+}
+
+.project-card__actions .btn-small:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.project-card__actions .btn-small:active {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.project-card__actions .btn-small i {
+    display: inline-block;
+    transition: transform 0.3s ease;
+}
+
+.project-card__actions .btn-small:hover i {
+    transform: translateY(-5px);
+}
+
+[data-theme="dark"] .project-card__actions .btn-small:hover {
+    box-shadow: 0 8px 20px rgba(255, 255, 255, 0.1);
+}
+
+/* ========================================
+   АДАПТАЦИЯ ДЛЯ МОБИЛЬНЫХ (ПРОЕКТЫ)
+   ======================================== */
+
+@media (max-width: 768px) {
+    .projects-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .project-card__content {
+        padding: 20px;
+    }
+
+    .project-card h3 {
+        font-size: 1.2rem;
+    }
+
+    /* Адаптация для карточек в разработке на мобильных */
+    .dev-badge {
+        font-size: 0.65rem;
+        padding: 2px 8px;
+        margin-left: 8px;
+    }
+
+    .project-card.in-development h3 {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .project-card__status {
+        margin: 12px 0 8px;
+    }
+
+    .status-progress {
+        font-size: 0.8rem;
+        margin-bottom: 4px;
+    }
+
+    .progress-bar {
+        height: 5px;
+    }
+}
+
+@media (max-width: 480px) {
+    .dev-badge {
+        display: block;
+        margin: 8px 0 0 0;
+        width: fit-content;
+    }
+    
+    .project-card.in-development h3 {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+/* ========================================
+   АНИМАЦИЯ ДЛЯ КНОПОК "СМОТРЕТЬ"
+   ======================================== */
+
+.project-card__actions .btn-small {
+    transition: all 0.3s ease;
+}
+
+.project-card__actions .btn-small:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.project-card__actions .btn-small:active {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.project-card__actions .btn-small i {
+    display: inline-block;
+    transition: transform 0.3s ease;
+}
+
+.project-card__actions .btn-small:hover i {
+    transform: translateY(-5px);
+}
+
+[data-theme="dark"] .project-card__actions .btn-small:hover {
+    box-shadow: 0 8px 20px rgba(255, 255, 255, 0.1);
+}
+
+/* ========================================
+   АДАПТАЦИЯ ДЛЯ МОБИЛЬНЫХ (ПРОЕКТЫ)
+   ======================================== */
+
+@media (max-width: 768px) {
+    .projects-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .project-card__content {
+        padding: 20px;
+    }
+
+    .project-card h3 {
+        font-size: 1.2rem;
+    }
+
+    /* Адаптация для карточек в разработке на мобильных */
+    .dev-badge {
+        font-size: 0.65rem;
+        padding: 2px 8px;
+        margin-left: 8px;
+    }
+
+    .project-card.in-development h3 {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .project-card__status {
+        margin: 12px 0 8px;
+    }
+
+    .status-progress {
+        font-size: 0.8rem;
+        margin-bottom: 4px;
+    }
+
+    .progress-bar {
+        height: 5px;
+    }
+}
+
+@media (max-width: 480px) {
+    .dev-badge {
+        display: block;
+        margin: 8px 0 0 0;
+        width: fit-content;
+    }
+    
+    .project-card.in-development h3 {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+/* ========================================
+   CONTACT CARDS - ИСПРАВЛЕНО для мобильных
    ======================================== */
 
 .contacts-grid {
@@ -456,7 +745,6 @@ section {
     opacity: 0.9;
 }
 
-/* Кнопка "Смотреть проекты" - изначально прозрачная */
 .btn-outline {
     background-color: transparent;
     color: var(--text-color);
@@ -469,13 +757,11 @@ section {
     color: var(--btn-outline-text-hover);
 }
 
-/* В светлой теме - черная обводка при наведении */
 [data-theme="light"] .btn-outline:hover {
     border-color: #000000;
     background-color: #ffffff;
 }
 
-/* В темной теме - более сильное затемнение */
 [data-theme="dark"] .btn-outline:hover {
     background-color: #ffffff;
     border-color: #ffffff;
@@ -487,7 +773,6 @@ section {
     font-size: 0.9rem;
 }
 
-/* Кнопка "Моё портфолио на Tilda" */
 .hero .btn-invert {
     background-color: var(--btn-bg);
     color: var(--btn-text);
@@ -499,7 +784,6 @@ section {
     border-color: #1a1a1a;
 }
 
-/* В темной теме - более сильное затемнение */
 [data-theme="dark"] .hero .btn-invert:hover {
     background-color: #404040;
     border-color: #404040;
@@ -803,6 +1087,12 @@ section {
    LOADER
    ======================================== */
 
+#f,
+#l {
+    position: fixed;
+    inset: 0;
+}
+
 #f {
     background: var(--bg-color);
     z-index: 10001;
@@ -847,7 +1137,7 @@ body.loading {
 }
 
 /* ========================================
-   FOOTER
+   FOOTER - ИСПРАВЛЕНО для мобильных
    ======================================== */
 
 .footer {
@@ -857,119 +1147,79 @@ body.loading {
     text-align: center;
     color: var(--gray-dark);
     font-size: 0.9rem;
+    padding-bottom: calc(30px + 70px);
 }
 
 /* ========================================
    АНИМАЦИИ ПРИ ПРОКРУТКЕ - ВСЕ ЭЛЕМЕНТЫ
    ======================================== */
 
-/* Герой секция - каждый элемент индивидуально */
-.hero__title {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
-}
-
-.hero__title.visible {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.hero__subtitle {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
-}
-
-.hero__subtitle.visible {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.hero__description {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
-}
-
-.hero__description.visible {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.hero__links {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
-}
-
-.hero__links.visible {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-/* Заголовки секций */
-.section-title {
-    opacity: 0;
-    transform: translateX(-30px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
-}
-
-.section-title.visible {
-    opacity: 1;
-    transform: translateX(0);
-}
-
-/* Кнопка открыть гостевую книгу */
-.guestbook-toggle-btn {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
-}
-
-.guestbook-toggle-btn.visible {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-/* About элементы */
-.about-item {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
-}
-
-.about-item.visible {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-/* Карточки проектов */
-.project-card {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
-}
-
-.project-card.visible {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-/* Карточки контактов */
+.hero__title,
+.hero__subtitle,
+.hero__description,
+.hero__links,
+.section-title,
+.guestbook-toggle-btn,
+.guest-subtitle,
+.about-item,
+.project-card,
 .contact-card {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(30px);
     transition: opacity 0.6s ease, transform 0.6s ease;
 }
 
+.section-title {
+    transform: translateX(-30px);
+}
+
+.hero__title.visible,
+.hero__subtitle.visible,
+.hero__description.visible,
+.hero__links.visible,
+.section-title.visible,
+.guestbook-toggle-btn.visible,
+.guest-subtitle.visible,
+.about-item.visible,
+.project-card.visible,
 .contact-card.visible {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateX(0) translateY(0);
 }
 
 /* ========================================
-   МЕДИА-ЗАПРОСЫ
+   АНИМАЦИЯ ДЛЯ КНОПОК "СМОТРЕТЬ"
+   ======================================== */
+
+.project-card__actions .btn-small {
+    transition: all 0.3s ease;
+}
+
+.project-card__actions .btn-small:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.project-card__actions .btn-small:active {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.project-card__actions .btn-small i {
+    display: inline-block;
+    transition: transform 0.3s ease;
+}
+
+.project-card__actions .btn-small:hover i {
+    transform: translateY(-5px);
+}
+
+[data-theme="dark"] .project-card__actions .btn-small:hover {
+    box-shadow: 0 8px 20px rgba(255, 255, 255, 0.1);
+}
+
+/* ========================================
+   МЕДИА-ЗАПРОСЫ - ИСПРАВЛЕНО
    ======================================== */
 
 @media (max-width: 768px) {
@@ -1053,26 +1303,57 @@ body.loading {
         font-size: 1.2rem;
     }
 
+    /* Адаптация для карточек в разработке на мобильных */
+    .dev-badge {
+        font-size: 0.65rem;
+        padding: 2px 8px;
+        margin-left: 8px;
+    }
+
+    .project-card.in-development h3 {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .project-card__status {
+        margin: 12px 0 8px;
+    }
+
+    .status-progress {
+        font-size: 0.8rem;
+        margin-bottom: 4px;
+    }
+
+    .progress-bar {
+        height: 5px;
+    }
+
     .contacts-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 10px;
-        justify-items: center;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        gap: 12px;
+        margin-top: 20px;
     }
 
     .contact-card {
-        flex-direction: column;
-        text-align: center;
+        width: 55px;
+        height: 55px;
         padding: 0;
-        width: 70px;
-        height: 70px;
-        justify-content: center;
+        display: flex;
         align-items: center;
+        justify-content: center;
         border-radius: 50%;
+        min-height: auto;
     }
 
     .contact-card__icon {
         margin-right: 0;
-        font-size: 1.6rem;
+        font-size: 1.8rem;
         width: auto;
     }
 
@@ -1083,16 +1364,24 @@ body.loading {
     .floating-sidebar {
         top: auto;
         bottom: 15px;
-        left: 50%;
-        transform: translate(-50%, 120%);
+        left: 0;
+        right: 0;
+        transform: translateY(120%);
         width: auto;
+        max-width: calc(100% - 30px);
+        margin: 0 auto;
         flex-direction: row;
         border-radius: 30px;
-        padding: 6px 10px;
+        padding: 6px 8px;
+        justify-content: space-around;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(12px);
+        border: 1px solid var(--border-color);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
     }
 
     .floating-sidebar.visible {
-        transform: translate(-50%, 0);
+        transform: translateY(0);
     }
 
     .floating-sidebar:hover {
@@ -1100,8 +1389,16 @@ body.loading {
     }
 
     .floating-sidebar .nav-item {
-        height: 40px;
-        padding: 0 12px;
+        height: 44px;
+        padding: 0;
+        opacity: 1;
+        transform: none;
+        flex: 1;
+        justify-content: center;
+    }
+
+    .floating-sidebar .nav-item::after {
+        display: none;
     }
 
     .floating-sidebar .text {
@@ -1109,7 +1406,8 @@ body.loading {
     }
 
     .floating-sidebar .icon {
-        font-size: 14px;
+        font-size: 20px;
+        width: auto;
     }
 
     .guestbook-toggle-btn {
@@ -1125,20 +1423,6 @@ body.loading {
     .message-card {
         padding: 15px;
     }
-
-    /* Отключаем анимации на мобильных */
-    .hero__title,
-    .hero__subtitle,
-    .hero__description,
-    .hero__links,
-    .section-title,
-    .guestbook-toggle-btn,
-    .about-item,
-    .project-card,
-    .contact-card {
-        opacity: 1;
-        transform: none;
-    }
 }
 
 @media (max-width: 480px) {
@@ -1151,22 +1435,26 @@ body.loading {
     }
 
     .contacts-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 8px;
+        gap: 10px;
     }
 
     .contact-card {
-        width: 60px;
-        height: 60px;
+        width: 50px;
+        height: 50px;
     }
 
     .contact-card__icon {
-        font-size: 1.4rem;
+        font-size: 1.5rem;
+    }
+
+    .floating-sidebar .icon {
+        font-size: 18px;
     }
 
     .footer {
         padding: 15px 0;
         font-size: 0.8rem;
+        padding-bottom: calc(15px + 65px);
     }
 
     .section-title {
@@ -1182,6 +1470,18 @@ body.loading {
     .guestbook-toggle-btn {
         font-size: 0.9rem;
         padding: 10px 18px;
+    }
+
+    /* Дополнительная адаптация для карточек в разработке */
+    .dev-badge {
+        display: block;
+        margin: 8px 0 0 0;
+        width: fit-content;
+    }
+    
+    .project-card.in-development h3 {
+        flex-direction: column;
+        align-items: flex-start;
     }
 }
 
@@ -1214,4 +1514,46 @@ body.loading {
         font-size: 1.8rem !important;
         width: 45px !important;
     }
+}
+/* ========================================
+   ФИНАЛЬНОЕ ИСПРАВЛЕНИЕ ДЛЯ КАРТОЧЕК В РАЗРАБОТКЕ
+   ======================================== */
+
+/* Переопределяем все предыдущие стили для карточек в разработке */
+.project-card.in-development {
+    opacity: 0 !important;
+    transform: translateY(40px) !important;
+    transition: opacity 1s cubic-bezier(0.4, 0, 0.1, 1), 
+                transform 1s cubic-bezier(0.4, 0, 0.1, 1),
+                background-color 0.3s ease,
+                border-color 0.3s ease,
+                box-shadow 0.3s ease !important;
+    will-change: opacity, transform;
+}
+
+.project-card.in-development.visible {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+}
+
+/* Убираем влияние общих анимаций на карточки в разработке */
+.hero__title.visible,
+.hero__subtitle.visible,
+.hero__description.visible,
+.hero__links.visible,
+.section-title.visible,
+.guestbook-toggle-btn.visible,
+.guest-subtitle.visible,
+.about-item.visible,
+.project-card:not(.in-development).visible,
+.contact-card.visible {
+    opacity: 1;
+    transform: translateX(0) translateY(0);
+}
+
+/* Оставляем обычные карточки как есть */
+.project-card:not(.in-development) {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
 }
