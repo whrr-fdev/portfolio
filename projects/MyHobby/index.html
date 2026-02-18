@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Моё хобби - программирование.</title>
+    <style>
+        html,
+        body {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        html::-webkit-scrollbar,
+        body::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* --- Стили загрузки (Водянка WHRR) --- */
+        #f {
+            position: fixed;
+            inset: 0;
+            background: #fff;
+            z-index: 10001;
+            pointer-events: none;
+            opacity: 0;
+            transition: .3s;
+        }
+
+        #l {
+            position: fixed;
+            inset: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            background: #fff;
+            font-weight: 900;
+            font-size: 28px;
+            letter-spacing: -1.5px;
+            font-family: sans-serif;
+        }
+
+        .b {
+            opacity: 0;
+            transform: translateX(var(--t));
+            animation: i .3s calc(var(--d)*.1s) forwards;
+        }
+
+        @keyframes i {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .flash {
+            opacity: 1 !important;
+        }
+
+        /* --- Основные стили страницы --- */
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            background-color: #ADD8E6;
+            font-family: sans-serif;
+        }
+
+        body.loading {
+            overflow: hidden;
+            /* Блокируем скролл пока идет загрузка */
+        }
+
+        #container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 150%;
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .des {
+            display: block;
+            margin: 10px auto;
+            border-radius: 20px;
+            background: #E0FFFF;
+            border: solid 1px black;
+            padding: 20px;
+            color: #000080;
+            line-height: 1.5;
+        }
+
+        /* --- Оптимизация галереи (Мобильная адаптация) --- */
+        #table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        #table tr {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        #table td {
+            padding: 10px;
+        }
+
+        .scale {
+            transition: 1s;
+            opacity: 0.5;
+            max-width: 100%;
+            /* Чтобы не вылезало на телефонах */
+            height: auto;
+            display: block;
+        }
+
+        .scale:hover {
+            transform: scale(1.1);
+            opacity: 1;
+            border: 3px solid #00FF00;
+        }
+
+        .imag {
+            margin: 20px auto;
+            display: block;
+            max-width: 200px;
+        }
+
+        /* Водяные знаки автора */
+        body::after {
+            /* content: "© 2026. ЕИА."; */
+            content: "© 2026. WHRR.";
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            opacity: 0.1;
+            z-index: 9998;
+        }
+
+        body::before {
+            /* content: "© 2026. ЕИА."; */
+            content: "© 2026. WHRR.";
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(15deg);
+            opacity: 0;
+            z-index: -1;
+            transition: opacity 0.5s;
+            color: rgba(255, 0, 0, 0.05);
+        }
+
+        body:not(:has(::after))::before {
+            opacity: 0.3;
+            z-index: 9999;
+        }
+
+        /* Медиа-запрос для мелких экранов */
+        @media (max-width: 600px) {
+            .des {
+                font-size: 14px;
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 120%;
+            }
+        }
+    </style>
+</head>
+
+<body class="loading">
+
+    <div id="f"></div>
+    <div id="l">
+        <span class="b" style="--d:3; --t:-20px">W</span>
+        <span class="b" style="--d:1; --t:-15px">H</span>
+        <span class="b" style="--d:2; --t:15px">R</span>
+        <span class="b" style="--d:4; --t:20px">R</span>
+    </div>
+
+    <div id="container">
+        <h1><b>Моё хобби</b></h1>
+
+        <div class="des">Я хочу рассказать о моём хобби - программировании. Программирование - это процесс создания
+            компьютерных программ на особом языке, превращающий алгоритмы и структуры данных в некоторую инструкцию,
+            которую может выполнить компьютер.</div>
+
+        <h1>Галерея изображений</h1>
+        <table id="table">
+            <tr>
+                <td><img src="https://sky.pro/media/wp-content/uploads/2023/01/7.1.-kak-osvoit-programmirovanie-s-nulya.png"
+                        width="300" class="scale"></td>
+                <td><img src="https://integral-russia.ru/wp-content/uploads/2019/10/Programmirovanie-v-SSSR-i-Rossii.jpg"
+                        width="288" class="scale"></td>
+                <td><img src="https://www.kadrof.ru/sites/default/files/illustrations/study_programming.jpg" width="295"
+                        class="scale"></td>
+
+            </tr>
+        </table>
+
+        <h1>Ссылки</h1>
+        <a href="https://ru.wikipedia.org/wiki/Программирование">
+            <img class="imag"
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Wikipedia-logo-v2-ru.svg/1200px-Wikipedia-logo-v2-ru.svg.png">
+        </a>
+
+        <h1>Интересные факты</h1>
+
+        <div class="des">Первый сайт, который до сих пор работает, был создан в 1991 году и его можно посетить по
+            адресу: <a href="http://info.cern.ch/hypertext/WWW/TheProject.html">info.cern.ch</a></div>
+
+        <div class="des">Ада Лавлейс считается первым программистом. В 1843 году она работала вместе с Чарльзом
+            Бэббиджем над созданием первой программы для аналитической машины.</div>
+
+        <div class="des">Язык JAVA ранее назывался Oak (Дуб). Позже его переименовали в честь сорта кофе Java.</div>
+
+        <div class="des">Первый персонаж-талисман Java (Star 7) был разработан художником Джо Палрангом, который позже
+            работал над «Шреком».</div>
+    </div>
+
+    <script>
+        // Логика загрузки (Водянка)
+        window.addEventListener('load', () => {
+            const f = document.getElementById('f');
+            const l = document.getElementById('l');
+
+            setTimeout(() => {
+                f.classList.add('flash'); // Вспышка
+                setTimeout(() => {
+                    l.style.display = 'none'; // Убираем лого
+                    f.classList.remove('flash'); // Убираем вспышку
+                    f.style.display = 'none';
+                    document.body.classList.remove('loading'); // Включаем скролл
+                }, 200);
+            }, 800);
+        });
+    </script>
+
+</body>
+
+</html>

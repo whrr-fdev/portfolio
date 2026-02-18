@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Список дел</title>
+    <style>
+        /* --- Стили загрузки (Твоя водянка WHRR) --- */
+        #f {
+            position: fixed;
+            inset: 0;
+            background: #fff;
+            z-index: 10001;
+            pointer-events: none;
+            opacity: 0;
+            transition: .3s;
+        }
+
+        #l {
+            position: fixed;
+            inset: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            background: #fff;
+            font-weight: 900;
+            font-size: 28px;
+            letter-spacing: -1.5px;
+            font-family: sans-serif;
+        }
+
+        .b {
+            opacity: 0;
+            display: inline-block;
+            transform: translateX(var(--t));
+            animation: i .3s calc(var(--d)*.1s) forwards;
+        }
+
+        @keyframes i {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .flash {
+            opacity: 1 !important;
+        }
+
+        /* --- Основные стили приложения --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        body.loading {
+            overflow: hidden;
+        }
+
+        .container {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 95%;
+            /* Для мобильных */
+            max-width: 400px;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .todo-form {
+            display: flex;
+            margin-bottom: 20px;
+        }
+
+        #new-task {
+            flex-grow: 1;
+            padding: 10px;
+            margin-right: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            outline: none;
+        }
+
+        #add-task {
+            padding: 10px 15px;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        #add-task:hover {
+            background-color: #45a049;
+        }
+
+        .task-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .task-list li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(5px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .task-list li button {
+            background-color: #f44336;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .task-list li button:hover {
+            background-color: #e53935;
+        }
+
+        .task-list li.completed span {
+            text-decoration: line-through;
+            color: #888;
+        }
+
+        .task-list li input[type="checkbox"] {
+            margin-right: 10px;
+            cursor: pointer;
+        }
+
+        /* Твои подписи ЕИА */
+        body::after {
+            /* content: "© 2026. ЕИА."; */
+            content: "© 2026. WHRR.";
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            opacity: 0.1;
+            z-index: 9998;
+        }
+
+        body::before {
+            /* content: "© 2026. ЕИА."; */
+            content: "© 2026. WHRR.";
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(15deg);
+            opacity: 0;
+            z-index: -1;
+            transition: opacity 0.5s;
+            color: rgba(255, 0, 0, 0.05);
+        }
+
+        body:not(:has(::after))::before {
+            opacity: 0.3;
+            z-index: 9999;
+        }
+
+        /* --- Мобильная оптимизация --- */
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            .todo-form {
+                flex-direction: column;
+            }
+
+            #new-task {
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
+
+            #add-task {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body class="loading">
+
+    <div id="f"></div>
+    <div id="l">
+        <span class="b" style="--d:3; --t:-20px">W</span>
+        <span class="b" style="--d:1; --t:-15px">H</span>
+        <span class="b" style="--d:2; --t:15px">R</span>
+        <span class="b" style="--d:4; --t:20px">R</span>
+    </div>
+
+    <div class="container">
+        <h1>Список дел</h1>
+
+        <div class="todo-form">
+            <input type="text" id="new-task" placeholder="Введите новую задачу" />
+            <button id="add-task">Добавить</button>
+        </div>
+
+        <ul id="task-list" class="task-list">
+        </ul>
+    </div>
+
+    <script>
+        // 1. Логика загрузки (Водянка)
+        window.addEventListener('load', () => {
+            const f = document.getElementById('f');
+            const l = document.getElementById('l');
+
+            setTimeout(() => {
+                f.classList.add('flash');
+                setTimeout(() => {
+                    l.style.display = 'none';
+                    f.classList.remove('flash');
+                    f.style.display = 'none';
+                    document.body.classList.remove('loading');
+                }, 200);
+            }, 700);
+        });
+
+        // 2. Логика To-Do списка
+        document.addEventListener('DOMContentLoaded', () => {
+            const taskInput = document.getElementById('new-task');
+            const addButton = document.getElementById('add-task');
+            const taskList = document.getElementById('task-list');
+
+            function createTask(taskText) {
+                const li = document.createElement('li');
+                li.classList.add('task');
+
+                li.innerHTML = `
+                    <div style="display: flex; align-items: center;">
+                        <input type="checkbox" class="task-checkbox">
+                        <span>${taskText}</span>
+                    </div>
+                    <button class="delete-btn">Удалить</button>
+                `;
+
+                const checkbox = li.querySelector('.task-checkbox');
+                const deleteButton = li.querySelector('.delete-btn');
+
+                deleteButton.addEventListener('click', () => {
+                    li.style.opacity = '0';
+                    setTimeout(() => taskList.removeChild(li), 300);
+                });
+
+                checkbox.addEventListener('change', () => {
+                    if (checkbox.checked) {
+                        li.classList.add('completed');
+                    } else {
+                        li.classList.remove('completed');
+                    }
+                });
+
+                taskList.appendChild(li);
+            }
+
+            addButton.addEventListener('click', () => {
+                const taskText = taskInput.value.trim();
+                if (taskText === '') {
+                    alert('Пожалуйста, введите задачу!');
+                    return;
+                }
+                createTask(taskText);
+                taskInput.value = '';
+            });
+
+            taskInput.addEventListener('keydown', (event) => {
+                if (event.key === 'Enter') {
+                    addButton.click();
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
