@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="description"
+        content="Портфолио frontend-разработчика Ерофеева Игоря. Создание современных сайтов на HTML, CSS и JavaScript.">
+    <meta name="keywords" content="frontend, разработчик, портфолио, HTML, CSS, JavaScript, веб-разработка">
+    <meta name="author" content="Ерофеев Игорь">
+    <meta property="og:title" content="Ерофеев Игорь | Frontend-разработчик">
+    <meta property="og:description" content="Портфолио frontend-разработчика. Создание современных сайтов.">
+    <meta property="og:type" content="website">
+
+    <script>
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        }
+    </script>
+
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
+    <link rel="manifest" href="assets/site.webmanifest">
+
+    <title>Ерофеев Игорь | Frontend-разработчик</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap&subset=cyrillic"
+        rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        /* Критический CSS для лоадера */
+        #f,
+        #l {
+            position: fixed;
+            inset: 0;
+        }
+
+        #f {
+            z-index: 10001;
+            pointer-events: none;
+            opacity: 0;
+            transition: .3s;
+        }
+
+        #l {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            font-weight: 900;
+            font-size: 28px;
+            letter-spacing: -1.5px;
+            font-family: sans-serif;
+        }
+
+        .b {
+            opacity: 0;
+            display: inline-block;
+            transform: translateX(var(--t));
+            animation: i .3s calc(var(--d)*.1s) forwards;
+        }
+
+        @keyframes i {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .flash {
+            opacity: 1 !important;
+        }
+
+        body.loading {
+            overflow: hidden !important;
+        }
+    </style>
+</head>
+
+<body class="loading">
+    <div class="scroll-progress"></div>
+
+    <div id="f"></div>
+    <div id="l">
+        <span class="b" style="--d:3; --t:-20px">W</span>
+        <span class="b" style="--d:1; --t:-15px">H</span>
+        <span class="b" style="--d:2; --t:15px">R</span>
+        <span class="b" style="--d:4; --t:20px">R</span>
+    </div>
+
+    <!-- Floating Sidebar -->
+    <nav class="floating-sidebar" id="sidebar">
+        <a href="#home" class="nav-item header__link active">
+            <span class="icon"><i class="fas fa-home"></i></span>
+            <span class="text">Главная</span>
+        </a>
+        <a href="#about" class="nav-item header__link">
+            <span class="icon"><i class="fas fa-user-astronaut"></i></span>
+            <span class="text">Обо мне</span>
+        </a>
+        <a href="#projects" class="nav-item header__link">
+            <span class="icon"><i class="fas fa-cube"></i></span>
+            <span class="text">Проекты</span>
+        </a>
+        <a href="#contacts" class="nav-item header__link">
+            <span class="icon"><i class="fas fa-envelope"></i></span>
+            <span class="text">Контакты</span>
+        </a>
+        <button class="nav-item theme-toggle" id="themeToggle">
+            <span class="icon">🌙</span>
+            <span class="text">Тема</span>
+        </button>
+    </nav>
+
+    <main class="main">
+        <!-- HOME секция -->
+        <section id="home" class="hero">
+            <div class="hero-bg"></div>
+            <div class="container">
+                <h1 class="hero__title">Привет! Я — <span class="highlight">Ерофеев Игорь</span></h1>
+                <p class="hero__subtitle">16-летний frontend-разработчик из Карелии</p>
+                <p class="hero__description">Создаю современные сайты, изучаю JavaScript и уже неплохо знаю CSS3 и
+                    HTML5. Здесь собраны мои лучшие работы — от простых лендингов до интерактивных приложений.</p>
+                <p class="hero__description">Люблю, когда дизайн дышит, а код работает идеально.</p>
+
+                <div class="hero__links">
+                    <a href="https://witchhanterr.tilda.ws/portfolio" class="btn btn-invert" target="_blank">
+                        <i class="fas fa-briefcase"></i>
+                        Моё портфолио на Tilda
+                        <span>></span>
+                    </a>
+                    <a href="#projects" class="btn btn-outline">
+                        <i class="fas fa-code"></i>
+                        Смотреть проекты
+                        <span>></span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ABOUT секция -->
+        <section id="about" class="about">
+            <div class="container">
+                <h2 class="section-title">Мой путь и развитие</h2>
+
+                <div class="about-timeline">
+                    <div class="about-item">
+                        <div class="about-icon">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <div class="about-content">
+                            <h3>Frontend</h3>
+                            <p>Создаю современные и адаптивные интерфейсы. Работаю с HTML5, CSS3 и JavaScript. Люблю
+                                чистую структуру, анимации и продуманный UX.</p>
+                        </div>
+                    </div>
+
+                    <div class="about-item">
+                        <div class="about-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <div class="about-content">
+                            <h3>Что изучаю сейчас</h3>
+                            <p>Углубляюсь в JavaScript, изучаю Python и 1С-разработку. Постепенно перехожу к более
+                                сложной логике и архитектуре проектов.</p>
+                        </div>
+                    </div>
+
+                    <div class="about-item">
+                        <div class="about-icon">
+                            <i class="fas fa-rocket"></i>
+                        </div>
+                        <div class="about-content">
+                            <h3>Планы развития</h3>
+                            <p>Хочу глубже изучить JavaScript, работать с API и backend. Также планирую начать изучение
+                                C++, чтобы понимать низкоуровневую логику и алгоритмы.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PROJECTS секция -->
+        <section id="projects" class="projects">
+            <div class="container">
+                <h2 class="section-title">Мои проекты</h2>
+                <div class="projects-grid">
+                    <div class="project-card">
+                        <div class="project-card__icon">
+                            <i class="fas fa-paint-brush"></i>
+                        </div>
+                        <div class="project-card__content">
+                            <h3>Студия создания сайтов</h3>
+                            <p>Студия полного цикла: дизайн, разработка, продвижение. Современные технологии, чистый
+                                код, понятные сроки.</p>
+                            <div class="project-card__actions">
+                                <a href="projects/Website_creation_studio/index.html" class="btn btn-small btn-invert"
+                                    target="_blank">
+                                    <i class="fas fa-external-link-alt"></i> Смотреть
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="project-card__icon">
+                            <i class="fas fa-box-open"></i>
+                        </div>
+                        <div class="project-card__content">
+                            <h3>LOCAL BOX</h3>
+                            <p>Ежемесячная подписка на коробки с товарами локальных брендов Петрозаводска.</p>
+                            <div class="project-card__actions">
+                                <a href="projects/LOCAL-BOX/index.html" class="btn btn-small btn-invert"
+                                    target="_blank">
+                                    <i class="fas fa-external-link-alt"></i> Смотреть
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="project-card__icon">
+                            <i class="fas fa-tasks"></i>
+                        </div>
+                        <div class="project-card__content">
+                            <h3>Список дел</h3>
+                            <p>Интерактивный планировщик с функциями добавления, отметки выполнения и удаления задач.
+                                Все данные сохраняются в браузере.</p>
+                            <div class="project-card__actions">
+                                <a href="projects/to-do list/index.html" class="btn btn-small btn-invert"
+                                    target="_blank">
+                                    <i class="fas fa-external-link-alt"></i> Смотреть
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="project-card__icon">
+                            <i class="fas fa-calculator"></i>
+                        </div>
+                        <div class="project-card__content">
+                            <h3>Я и 1С</h3>
+                            <p>Мой путь в 1С-разработке и о нашем сообществе — клубе, где мы общаемся, делимся знаниями
+                                и растем вместе.</p>
+                            <div class="project-card__actions">
+                                <a href="projects/Я и 1С/index.html" class="btn btn-small btn-invert" target="_blank">
+                                    <i class="fas fa-external-link-alt"></i> Смотреть
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="project-card__icon">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <div class="project-card__content">
+                            <h3>Моё хобби</h3>
+                            <p>Программирование — это не только моя профессия, но и главное увлечение. Здесь я делаю то,
+                                что вдохновляет: пет-проекты, эксперименты и просто код ради интереса.</p>
+                            <div class="project-card__actions">
+                                <a href="projects/MyHobby/index.html" class="btn btn-small btn-invert" target="_blank">
+                                    <i class="fas fa-external-link-alt"></i> Смотреть
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="project-card__icon">
+                            <i class="fas fa-thermometer-half"></i>
+                        </div>
+                        <div class="project-card__content">
+                            <h3>Конвертер температур (и не только)</h3>
+                            <p>Утилита для конвертации различных единиц измерения.</p>
+                            <div class="project-card__actions">
+                                <a href="projects/Конвертер/index.html" class="btn btn-small btn-invert"
+                                    target="_blank">
+                                    <i class="fas fa-external-link-alt"></i> Смотреть
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="project-card__icon">
+                            <i class="fas fa-ghost"></i>
+                        </div>
+                        <div class="project-card__content">
+                            <h3>> В разработке <</h3>
+                                    <p>Пока что тут пусто ...</p>
+                                    <!-- <div class="project-card__actions">
+                                <a href="projects/Конвертер/index.html" class="btn btn-small btn-invert" target="_blank">
+                                    <i class="fas fa-external-link-alt"></i> Смотреть
+                                </a>
+                            </div> -->
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <div class="project-card__icon">
+                            <i class="fas fa-ghost"></i>
+                        </div>
+                        <div class="project-card__content">
+                            <h3>> В разработке <</h3>
+                                    <p>Пока что тут пусто ...</p>
+                                    <!-- <div class="project-card__actions">
+                                <a href="projects/Конвертер/index.html" class="btn btn-small btn-invert" target="_blank">
+                                    <i class="fas fa-external-link-alt"></i> Смотреть
+                                </a>
+                            </div> -->
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <div class="project-card__icon">
+                            <i class="fas fa-ghost"></i>
+                        </div>
+                        <div class="project-card__content">
+                            <h3>> В разработке <</h3>
+                                    <p>Пока что тут пусто ...</p>
+                                    <!-- <div class="project-card__actions">
+                                <a href="projects/Конвертер/index.html" class="btn btn-small btn-invert" target="_blank">
+                                    <i class="fas fa-external-link-alt"></i> Смотреть
+                                </a>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- GUESTBOOK секция -->
+        <section id="guestbook" class="guestbook section">
+            <div class="container">
+                <div class="guestbook-header">
+                    <h2 class="section-title">Гостевая книга</h2>
+                    <p class="section-subtitle guest-subtitle">
+                        Оставь короткое сообщение или эмодзи 👋
+                    </p>
+                    <!-- Кнопка открыть гостевую книгу -->
+                    <button class="guestbook-toggle-btn" id="guestMainToggle">
+                        <i class="fas fa-book-open"></i>
+                        <span id="toggleText">Открыть гостевую книгу</span>
+                        <i class="fas fa-chevron-down" id="toggleIcon"></i>
+                    </button>
+                </div>
+
+                <!-- Контент (изначально скрыт) -->
+                <div id="guestbookContent" style="display: none;">
+                    <!-- <p class="section-subtitle guest-subtitle">
+                        Оставь короткое сообщение или эмодзи 👋
+                    </p> -->
+
+                    <!-- Форма -->
+                    <div class="guestbook-wrapper">
+                        <form class="guestbook-form">
+                            <input type="text" class="guest-input" placeholder="Ваше имя" required>
+                            <textarea class="guest-textarea" placeholder="Ваше сообщение..." rows="4"
+                                required></textarea>
+                            <button type="submit" class="btn guest-btn">
+                                Отправить
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Сообщения -->
+                    <div id="commentsContainer" class="guestbook-messages"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTACTS секция -->
+        <section id="contacts" class="contacts">
+            <div class="container">
+                <h2 class="section-title">Как можно со мной связаться?</h2>
+                <div class="contacts-grid">
+                    <a href="https://t.me/H43404" class="contact-card" target="_blank">
+                        <div class="contact-card__icon">
+                            <i class="fab fa-telegram"></i>
+                        </div>
+                        <div class="contact-card__content">
+                            <h3>Telegram</h3>
+                            <p>Быстрый чат</p>
+                            <span class="arrow">></span>
+                        </div>
+                    </a>
+
+                    <a href="https://github.com/whrr-fdev" class="contact-card" target="_blank">
+                        <div class="contact-card__icon">
+                            <i class="fab fa-github"></i>
+                        </div>
+                        <div class="contact-card__content">
+                            <h3>Github</h3>
+                            <p>Мои проекты</p>
+                            <span class="arrow">></span>
+                        </div>
+                    </a>
+
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=whrr.off@gmail.com" class="contact-card"
+                        target="_blank">
+                        <div class="contact-card__icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="contact-card__content">
+                            <h3>Email</h3>
+                            <p>Пишите письма</p>
+                            <span class="arrow">></span>
+                        </div>
+                    </a>
+
+                    <!-- <a href="https://discord.com/users/ваш_username" class="contact-card" target="_blank">
+                        <div class="contact-card__icon">
+                            <i class="fab fa-discord"></i>
+                        </div>
+                        <div class="contact-card__content">
+                            <h3>Discord</h3>
+                            <p>Обсудим вашу задачу</p>
+                            <span class="arrow">></span>
+                        </div>
+                    </a> -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>© 2026. ЕИА. Все права защищены.</p>
+        </div>
+    </footer>
+
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <!-- Main JS -->
+    <script src="js/script.js"></script>
+
+    <script>
+        window.addEventListener('load', () => {
+            const f = document.getElementById('f');
+            const l = document.getElementById('l');
+
+            setTimeout(() => {
+                f.classList.add('flash');
+                setTimeout(() => {
+                    l.style.display = 'none';
+                    f.classList.remove('flash');
+                    f.style.display = 'none';
+                    document.body.classList.remove('loading');
+                }, 200);
+            }, 700);
+        });
+    </script>
+</body>
+
+</html>
